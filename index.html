@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金錢即將成為廢紙 | 免費網頁設計革命</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --accent-green: #00ff41;
+            --accent-blue: #00d1ff;
+            --text-color: #e0e0e0;
+            --glass-bg: rgba(20, 20, 20, 0.7);
+            --transition-speed: 0.4s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Glitch Effect --- */
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch:hover::before,
+        .glitch:hover::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+        }
+
+        .glitch:hover::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--accent-blue);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch:hover::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--accent-green);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(31px, 9999px, 94px, 0); }
+            20% { clip: rect(62px, 9999px, 42px, 0); }
+            40% { clip: rect(10px, 9999px, 85px, 0); }
+            60% { clip: rect(78px, 9999px, 12px, 0); }
+            80% { clip: rect(55px, 9999px, 60px, 0); }
+            100% { clip: rect(90px, 9999px, 30px, 0); }
+        }
+
+        @keyframes glitch-anim2 {
+            0% { clip: rect(12px, 9999px, 30px, 0); }
+            20% { clip: rect(45px, 9999px, 80px, 0); }
+            40% { clip: rect(80px, 9999px, 20px, 0); }
+            60% { clip: rect(20px, 9999px, 90px, 0); }
+            80% { clip: rect(60px, 9999px, 10px, 0); }
+            100% { clip: rect(30px, 9999px, 70px, 0); }
+        }
+
+        /* --- Sections --- */
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #111 0%, #050505 100%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            height: 3em;
+            color: #888;
+        }
+
+        .cta-btn {
+            margin-top: 40px;
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+            font-family: 'Orbitron', sans-serif;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            background: var(--accent-green);
+            color: #000;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.6);
+        }
+
+        /* Manifesto */
+        .manifesto {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .manifesto { grid-template-columns: 1fr; }
+        }
+
+        .manifesto-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--accent-blue);
+        }
+
+        .manifesto-box {
+            padding: 40px;
+            background: var(--glass-bg);
+            border-left: 4px solid var(--accent-blue);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .service-card {
+            background: #111;
+            padding: 40px;
+            border: 1px solid #222;
+            transition: var(--transition-speed);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-10px);
+        }
+
+        .service-card h3 {
+            margin-bottom: 15px;
+            color: var(--accent-green);
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-top: 20px;
+            display: block;
+        }
+
+        /* Form */
+        .request-form {
+            max-width: 800px;
+            background: var(--glass-bg);
+            padding: 60px;
+            border: 1px solid #333;
+            margin: 100px auto;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--accent-blue);
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 209, 255, 0.3);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 20px;
+            background: var(--accent-blue);
+            color: #000;
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #0088aa;
+            transform: scale(1.02);
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid #222;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-green); }
+
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="glitch" data-text="金錢即將成為廢紙">金錢即將成為廢紙</h1>
+        <p id="typewriter"></p>
+        <a href="#request" class="cta-btn">立即開啟後金錢時代</a>
+    </section>
+
+    <!-- Manifesto Section -->
+    <section id="manifesto" class="manifesto reveal">
+        <div class="manifesto-content">
+            <h2 class="glitch" data-text="免費設計革命">免費設計革命</h2>
+            <p>馬斯克預言：當 AI 能夠超越人類所有的生產力時，金錢將失去其作為資源分配工具的意義。我們正處於這個轉折點。</p>
+            <br>
+            <p>傳統網頁設計公司向您收取數萬元的費用，這是舊時代的壟斷殘餘。在 AI 的加持下，生產成本已趨近於零。既然成本為零，那收費就是一種謊言。</p>
+        </div>
+        <div class="manifesto-box">
+            <h3 style="color:var(--accent-green); margin-bottom:20px;">後金錢時代宣言</h3>
+            <p>1. 生產力回歸大眾：不再受限於預算。<br>
+               2. 價值大於價格：您的創意才是核心。<br>
+               3. 共享未來：我們用 AI 為您建構數位門面，不取分毫。</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="reveal">
+        <h2 style="text-align: center; margin-bottom: 50px;" class="glitch" data-text="實驗性免費服務">實驗性免費服務</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>個人品牌頁</h3>
+                <p>為數位遊民、藝術家或開發者量身打造的沉浸式個人展示頁。</p>
+                <span class="price">$0 TWD</span>
+            </div>
+            <div class="service-card">
+                <h3>產品展示頁</h3>
+                <p>極簡、現代、高轉化率的產品介紹頁面，完美支援所有設備。</p>
+                <span class="price">$0 TWD</span>
+            </div>
+            <div class="service-card">
+                <h3>活動宣傳頁</h3>
+                <p>快速部署的活動登陸頁，整合社群與報名系統。</p>
+                <span class="price">$0 TWD</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section id="request" class="reveal">
+        <div class="request-form">
+            <h2 style="margin-bottom: 40px; color: var(--accent-green);">開始您的免費委託</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label>姓名 / 暱稱</label>
+                    <input type="text" id="name" placeholder="您的稱呼" required>
+                </div>
+                <div class="form-group">
+                    <label>聯繫方式 (Email / Line ID)</label>
+                    <input type="text" id="contact" placeholder="我們如何聯繫您" required>
+                </div>
+                <div class="form-group">
+                    <label>網站需求簡述</label>
+                    <textarea id="desc" rows="5" placeholder="請描述您的網站目標與內容..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">發送到未來</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Powered by AI & Free Spirit. The future is now.</p>
+        <p style="margin-top: 10px;">&copy; 2026 Free Web Design Revolution. All rights released.</p>
+    </footer>
+
+    <script>
+        // --- Typewriter Effect ---
+        const text = "「在未來，AI 將處理所有勞動，商品與服務將變得極其廉價且豐盛。金錢將不再是限制，而是選擇。」—— 靈感源自 Elon Musk";
+        let i = 0;
+        const speed = 50;
+        const typewriter = document.getElementById("typewriter");
+
+        function typeWriter() {
+            if (i < text.length) {
+                typewriter.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+
+        // --- Scroll Reveal ---
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add("active");
+                }
+            });
+        }
+
+        // --- Form Handling ---
+        const form = document.getElementById('contactForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = "傳送中...";
+            btn.disabled = true;
+
+            // Simulate sending delay
+            setTimeout(() => {
+                alert('委託已傳送到 AI 核心！我們將在評估後聯繫您。');
+                btn.innerHTML = "發送到未來";
+                btn.disabled = false;
+                form.reset();
+            }, 2000);
+        });
+
+        // Init
+        window.addEventListener("scroll", reveal);
+        window.onload = () => {
+            typeWriter();
+            reveal();
+        };
+    </script>
+</body>
+</html>
